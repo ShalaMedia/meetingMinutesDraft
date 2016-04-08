@@ -1,0 +1,48 @@
+Meeting Minutes Self Assess Project *Not Finished*
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace meetingMinProject
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+           
+                Console.WriteLine("\t  ***********************************************************");
+                Console.WriteLine("\t       ShalaMedia Marketing Software Meeting Minutes   \n");
+                Console.WriteLine("\t  ***********************************************************\n\n");
+
+                //Create Meeting
+
+                // list of movies
+                List<string> meetingType = new List<string>() {"1. Marketing Team", "2. Administration Team", "3. Developer Team", "4. All Teams"};
+
+                Console.WriteLine("Please enter today's date (MM/DD/YY): ");
+                string date = Console.ReadLine();
+                Console.WriteLine("Please enter the person recording the minutes : ");
+                string record = Console.ReadLine();
+                Console.WriteLine("Please enter the person who is leading the meeting : ");
+                string lead = Console.ReadLine();
+                Console.WriteLine("\n");
+                Console.WriteLine("List of team types:");
+                    foreach (string item in meetingType)
+                        {
+                            Console.WriteLine(item);
+                        }
+                Console.WriteLine("What type of meeting will be recorded? Enter number : ");
+                int type = int.Parse(Console.ReadLine());
+                Console.WriteLine("What is the topic of this meeting : ");
+                string topic = Console.ReadLine();
+                Console.WriteLine("Please enter the meeting notes now :");
+                string notes = Console.ReadLine();
+            //do {
+
+            //} while ()
+        }
+    }
+}

@@ -1,0 +1,201 @@
+Class for Meeting Minutes Self Assess Project **Not Finished**
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace meetingMinProject
+{
+    class Create
+    {
+        //Fields
+        private string date;
+        private string header;
+        private string record = "";
+        private string lead = "";
+        private int meetType;
+        private List<string> listType = new List<string>();
+        private string topic = "";
+        private string notes = "";
+        private bool addTopic = true;
+
+        //Properties
+        public string Date
+        {
+            get
+            {
+                return this.date;
+            }
+            set
+            {
+                DateTime today = DateTime.Today;
+                string result = today.ToString("MMddyy");
+                this.date = result;
+                Console.WriteLine("Minutes" + result + ".txt");
+            }
+        }
+        public string Header
+        {
+            get
+            {
+                return this.header;
+            }
+            set
+            {
+               Console.WriteLine("   ***MEETING MINUTES***\n\n\t\t\t      ShalaMedia Inc,\n\t\t\t      513 Ninth St.\n\t\t\t      Cleveland Ohio\n   *************************************************************************\n\n");
+            }
+        }
+        public string Record
+        {
+            get
+            {
+                return this.record;
+            }
+            set
+            {
+                this.record = value;
+            }
+        }
+        public string Lead
+        {
+            get
+            {
+                return this.lead;
+            }
+            set
+            {
+                this.lead = value;
+            }
+        }
+        public int MeetType
+        {
+            get
+            {
+                return this.meetType;
+            }
+            set
+            { 
+               this.meetType = value;
+            }
+        }
+
+        public List<string> ListType
+        {
+            get
+            {
+                return this.ListType;
+            }
+            set
+            {
+                this.listType = value;
+            }
+        }
+        public string Topic
+        {
+            get
+            {
+                return this.topic;
+            }
+            set
+            {
+                this.topic = value;
+            }
+        }
+        public string Notes
+        {
+            get
+            {
+                return this.notes;
+            }
+            set
+            {
+                this.notes = value;
+            }
+        }
+        public bool AddTopic
+        {
+            get
+            {
+                return this.addTopic;
+            }
+            set
+            {
+                Console.WriteLine("Would you like to enter notes for another topic? Y/N ");
+                string response = Console.ReadLine().ToUpper();
+
+                if (response != "Y" || response != "YES")
+                {
+                    this.addTopic = value;
+                }
+
+                else
+                {
+                    throw new Exception(string.Format("Goodbye!"));
+                }
+            }
+        }
+
+        //Constructors
+
+        public Create() //Default
+        {
+
+        }
+
+        public Create(string date, string header) //Adds date and Header to top of the file.
+        {
+            this.date = date;
+            this.header = header;
+        }
+
+        public Create(bool addTopic) //Add new topic
+        {
+            this.addTopic = addTopic;
+        }
+
+        public Create(string record, string lead, int meetType, List<string> listType, string topic, string notes)
+        {
+            this.record = record;
+            this.lead = lead;
+            this.meetType = meetType;
+            this.listType = ListType;
+            this.topic = topic;
+            this.notes = notes;
+        }
+
+        //METHODS
+
+        public void PrintHeader(string date, string header)
+        {
+            Console.WriteLine("   \t\t\t         " + date);
+            Console.WriteLine("   \n\n\t\t\t   ***MEETING MINUTES***\n\n\t\t\t      ShalaMedia Inc,\n\t\t\t      513 Ninth St.\n\t\t\t      Cleveland Ohio\n   *************************************************************************\n\n");
+
+        }
+
+        public void PrintAllMinuteInfo(StringBuilder builder)
+        {
+            builder.AppendLine();
+            builder.Append(date);
+            builder.AppendLine();
+            builder.Append(header);
+            builder.AppendLine();
+            builder.Append(record);
+            builder.AppendLine();
+            builder.Append(lead);
+            builder.AppendLine();
+            builder.Append(meetType);
+            builder.AppendLine();
+            builder.Append(topic);
+            builder.AppendLine();
+            builder.Append(notes);
+        }
+
+    }
+
+}
+
+        
+    
+
