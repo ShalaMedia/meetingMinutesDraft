@@ -1,0 +1,406 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+using System.Globalization;
+
+namespace finalMeetingMinutes
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            //Heading
+            Console.WriteLine("\t  ***********************************************************");
+            Console.WriteLine("\t       ShalaMedia Marketing Software Meeting Minutes   \n");
+            Console.WriteLine("\t  ***********************************************************\n\n");
+
+
+
+            do
+            {
+                //User Options
+                Console.WriteLine("1. CREATE MEETING \n2. VIEW TEAM \n3. EXIT");
+                string options = Console.ReadLine();
+
+
+                switch (options)
+                {
+                    case "1":
+
+                        Console.WriteLine("Create Meeting");
+                        break;
+
+                    case "2":
+
+                        Console.WriteLine("View Team");
+                        break;
+
+                    case "3":
+
+                        Console.WriteLine("Exit");
+                        break;
+
+                    default:
+
+                        Console.WriteLine("INVALID ENTRY!");
+                        break;
+                }
+
+
+                if (options == "1")
+                {
+                    Console.WriteLine("Enter name of person typing meeting minutes.");
+                    string rName = Console.ReadLine();
+                    Console.WriteLine("Enter name of person leading the meeting.");
+                    string lName = Console.ReadLine();
+
+                    //Meeting Date
+                    Console.WriteLine("Enter date of meeting.");
+                    Console.ReadLine();
+                    DateTime now = DateTime.Now;
+                    string date = now.ToString("MM/dd/yy", DateTimeFormatInfo.InvariantInfo);
+
+                    //Remove chars from date
+                    var charsToRemove = new string[] { ",", ".", ";", "'", "/", "-" };
+                    foreach (var c in charsToRemove)
+                    {
+                        date = date.Replace(c, string.Empty);
+                    }
+                    //Console.WriteLine(date);
+
+                    //List of meeting types
+                    Console.WriteLine("List of team types:");
+                    Console.WriteLine("Enter meeting type.");
+                    List<string> meetingType = new List<string>() { "1. Marketing Team", "2. Administration Team", "3. Developer Team", "4. All Teams" };
+
+                    foreach (string item in meetingType)
+                    {
+                        Console.WriteLine(item);
+
+                    }
+
+                    string options1 = Console.ReadLine();
+
+                    switch (options1)
+                    {
+                        case "1":
+                            options1 = "Marketing Team";
+                            break;
+
+                        case "2":
+
+                            options1 = "Administration Team";
+                            break;
+
+                        case "3":
+
+                            options1 = "Developer Team";
+                            break;
+
+                        case "4":
+
+                            options1 = "All Teams";
+                            break;
+
+                        default:
+
+                            Console.WriteLine("INVALID ENTRY!");
+                            break;
+                    }
+
+                    //Enter Notes
+                    Console.WriteLine("\nEnter notes: ");
+                    string notes = Console.ReadLine();
+                    Console.WriteLine("\nWould you like to add more notes? Enter 'Y' or 'N'.");
+                    string mNotes = Console.ReadLine().ToUpper();
+
+                    if (mNotes == "Y")
+                    {
+                        Console.WriteLine("Add more notes: ");
+                        mNotes = Console.ReadLine();
+                        Console.WriteLine("   \n\n\t\t\t   ***MEETING MINUTES***\n\n\t\t\t      ShalaMedia Inc,\n\t\t\t      513 Ninth St.\n\t\t\t      Cleveland Ohio\n   *************************************************************************\n\n");
+                        Console.WriteLine("Meeting Recorder: " + rName + "\nMeeting Leader: " + lName + "\nToday's Date: " + date + "\nMeeting Type: " + options1 + "\nNotes: " + notes + "\nMore Notes: " + mNotes);
+
+
+                    }
+
+                    else if (mNotes == "N")
+                    {
+                        Console.WriteLine("Okay!");
+                        Console.WriteLine("   \n\n\t\t\t   ***MEETING MINUTES***\n\n\t\t\t      ShalaMedia Inc,\n\t\t\t      513 Ninth St.\n\t\t\t      Cleveland Ohio\n   *************************************************************************\n\n");
+                        Console.WriteLine("Meeting Recorder: " + rName + "\nMeeting Leader: " + lName + "\nToday's Date: " + date + "\nMeeting Type: " + options1 + "\nNotes: " + notes + "\nMore Notes: " + mNotes);
+
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid Entry!");
+                    }
+                    Console.ReadLine();
+
+                    //For Writer Date
+                    DateTime now1 = DateTime.Now;
+                    string date1 = now1.ToString("MM/dd/yy", DateTimeFormatInfo.InvariantInfo);
+
+
+                    //Write To File
+                    StreamWriter writer = new StreamWriter("Minutes" + date + ".txt");  
+                    using (writer)
+                    {
+                        writer.WriteLine("\t\t\t\t " + date1);
+                        writer.WriteLine("\n\n\t\t\t   ***MEETING MINUTES***     ");
+                        writer.WriteLine("\n\n\t\t\t      ShalaMedia Inc,\n\t\t\t");
+                        writer.WriteLine("\n\n\t\t\t      513 Ninth St.\n\t\t\t");
+                        writer.WriteLine("\n\n\t\t\t      Cleveland Ohio\n\t\t\t");
+                        writer.WriteLine("*************************************************************************\n\n");
+                        writer.WriteLine("\n");
+                        writer.WriteLine("\nMeeting Recorder: " + rName);
+                        writer.WriteLine("\nMeeting Leader: " + lName );
+                        //writer.WriteLine("\nToday's Date: " + date);
+                        writer.WriteLine("\nMeeting Type: " + options1);
+                        writer.WriteLine("\nNotes: " + notes);
+                        writer.WriteLine("\nMore Notes: " + mNotes);
+                        writer.WriteLine("\n");
+                    }
+                    StreamReader reader = new StreamReader("Minutes" + date + ".txt");
+                    using(reader)
+                    {
+                        Console.WriteLine(reader);
+                    }
+                }
+
+                else if (options == "2")
+                {
+                    //View Team
+                    Console.WriteLine("\n    *View Team* ");
+                    Console.WriteLine("********************");
+                    Console.WriteLine("Choose a veiwing option.\n\n1. All Team Members\n2. Marketing Team Members\n3. Admin Team Members\n4. Developer Team Members");
+                    int num = int.Parse(Console.ReadLine());
+                    switch (num)
+                    {
+                        case 1:
+                            Console.WriteLine("\n *All Team Members*");
+                            Console.WriteLine("**********************");
+                            ViewTeam allTeams = new ViewTeam();
+                            allTeams.PrintAllTeams();
+                            Console.WriteLine("\n");
+                            break;
+
+                        case 2:
+                            Console.WriteLine("\n*Marketing Team Members*");
+                            Console.WriteLine("*************************");
+                            ViewTeam marketTeams = new ViewTeam();
+                            marketTeams.MarketingTeam();
+                            Console.WriteLine("\n");
+                            break;
+
+                        case 3:
+                            Console.WriteLine("\n *Admin Team Members*");
+                            Console.WriteLine("**********************");
+                            ViewTeam adminTeams = new ViewTeam();
+                            adminTeams.AdminTeam();
+                            Console.WriteLine("\n");
+                            break;
+
+                        case 4:
+                            Console.WriteLine("\n *Dev Team Members*");
+                            Console.WriteLine("********************");
+                            ViewTeam devTeams = new ViewTeam();
+                            devTeams.DevTeam();
+                            Console.WriteLine("\n");
+                            break;
+
+                        default:
+                            Console.WriteLine("\nThank you for Viewing!");
+                            break;
+
+                    }
+                }
+
+                //Exit Program
+                else if (options == "3")
+                {
+                    Console.WriteLine("Goodbye!");
+                    break;
+
+                }
+                else
+                {
+                    Console.WriteLine("Invalid Entry!");
+                    break;
+
+                }
+
+
+            } while (true);
+         }
+    }
+
+
+
+
+        /*****************************************CLASS VIEW TEAM********************************************/
+    
+        /*******************************************METHODS TOO!***********************************************/
+
+    class ViewTeam
+        {
+            private Dictionary<string, int> myDictionary
+            {
+                get
+                {
+                    return this.myDictionary;
+                }
+                set
+                {
+                    this.myDictionary = value;
+                }
+
+            }
+            private string allTeams { get; set; }
+            private string marketTeam { get; set; }
+            private string adminTeam { get; set; }
+            private string devTeam { get; set; }
+
+            public ViewTeam()
+            {
+
+            }
+
+            public ViewTeam(string allTeams, string marketTeam, string adminTeam, string devTeam)
+            {
+                this.allTeams = allTeams;
+                this.marketTeam = marketTeam;
+                this.adminTeam = adminTeam;
+                this.devTeam = devTeam;
+            }
+
+            public void PrintAllTeams()
+            {
+                Dictionary<string, int> myDictionary = new Dictionary<string, int>();
+                myDictionary.Add("Nikkola Tesla", 1);
+                myDictionary.Add("Albert Einstein", 1);
+                myDictionary.Add("Walter Russel", 1);
+                myDictionary.Add("Maya Angelou", 2);
+                myDictionary.Add("Ayn Rand", 2);
+                myDictionary.Add("Galileo Galilei", 2);
+                myDictionary.Add("Shalamar Brown", 3);
+                myDictionary.Add("Marie Curie", 3);
+                myDictionary.Add("Friedrich Nietzsche", 3);
+
+                for (int count = 0; count < myDictionary.Count; count++)
+                {
+                    var element = myDictionary.ElementAt(count);
+                    var Key = element.Key;
+                    var Value = element.Value;
+
+                    if (Value == 1)
+                    {
+                        Console.WriteLine(Key + " (Marketing Team)");
+
+                    }
+                    else if (Value == 2)
+                    {
+                        Console.WriteLine(Key + " (Admin Team)");
+                    }
+                    else if (Value == 3)
+                    {
+                        Console.WriteLine(Key + " (Developer Team)");
+                    }
+
+                }
+                Console.WriteLine("\n");
+
+            }
+
+            public void MarketingTeam()
+            {
+
+                Dictionary<string, int> myDictionary = new Dictionary<string, int>();
+                myDictionary.Add("Nikkola Tesla", 1);
+                myDictionary.Add("Albert Einstein", 1);
+                myDictionary.Add("Walter Russel", 1);
+                myDictionary.Add("Maya Angelou", 2);
+                myDictionary.Add("Ayn Rand", 2);
+                myDictionary.Add("Galileo Galilei", 2);
+                myDictionary.Add("Shalamar Brown", 3);
+                myDictionary.Add("Marie Curie", 3);
+                myDictionary.Add("Friedrich Nietzsche", 3);
+                for (int count = 0; count < myDictionary.Count; count++)
+                {
+                    var element = myDictionary.ElementAt(count);
+                    var Key = element.Key;
+                    var Value = element.Value;
+
+                    if (Value == 1)
+                    {
+                        Console.WriteLine(Key);
+
+                    }
+                }
+                Console.WriteLine("\n");
+            }
+            public void AdminTeam()
+            {
+
+                Dictionary<string, int> myDictionary = new Dictionary<string, int>();
+                myDictionary.Add("Nikkola Tesla", 1);
+                myDictionary.Add("Albert Einstein", 1);
+                myDictionary.Add("Walter Russel", 1);
+                myDictionary.Add("Maya Angelou", 2);
+                myDictionary.Add("Ayn Rand", 2);
+                myDictionary.Add("Galileo Galilei", 2);
+                myDictionary.Add("Shalamar Brown", 3);
+                myDictionary.Add("Marie Curie", 3);
+                myDictionary.Add("Friedrich Nietzsche", 3);
+                for (int count = 0; count < myDictionary.Count; count++)
+                {
+                    var element = myDictionary.ElementAt(count);
+                    var Key = element.Key;
+                    var Value = element.Value;
+
+                    if (Value == 2)
+                    {
+                        Console.WriteLine(Key);
+
+                    }
+                }
+                Console.WriteLine("\n");
+            }
+            public void DevTeam()
+            {
+
+                Dictionary<string, int> myDictionary = new Dictionary<string, int>();
+                myDictionary.Add("Nikkola Tesla", 1);
+                myDictionary.Add("Albert Einstein", 1);
+                myDictionary.Add("Walter Russel", 1);
+                myDictionary.Add("Maya Angelou", 2);
+                myDictionary.Add("Ayn Rand", 2);
+                myDictionary.Add("Galileo Galilei", 2);
+                myDictionary.Add("Shalamar Brown", 3);
+                myDictionary.Add("Marie Curie", 3);
+                myDictionary.Add("Friedrich Nietzsche", 3);
+                for (int count = 0; count < myDictionary.Count; count++)
+                {
+                    var element = myDictionary.ElementAt(count);
+                    var Key = element.Key;
+                    var Value = element.Value;
+
+                    if (Value == 3)
+                    {
+                        Console.WriteLine(Key);
+
+                    }
+                }
+                Console.WriteLine("\n");
+            }
+
+        }
+    }
+
+                
+            
+
+
